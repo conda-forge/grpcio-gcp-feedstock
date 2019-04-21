@@ -1,6 +1,6 @@
 {% set name = "grpcio-gcp" %}
 {% set version = "0.2.2" %}
-
+{% set data = load_setup_py_data() %}
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -17,12 +17,10 @@ build:
 requirements:
   host:
     - python
-    - pip
+    - pip >=18.1
+    - grpcio-tools >=1.16.1
   run:
-    - python
-    - grpcio >={{ version }}
-    - grpcio-tools
-    - protobuf >=3.6.1
+    - {{ pin_compatible('grpcio-tools') }}
 
 test:
   imports:
@@ -30,18 +28,80 @@ test:
     - grpc
 
 about:
-  home: https://github.com/GoogleCloudPlatform/grpc-gcp-python
-  license: Apache 2.0
-  license_file: LICENSE
-  summary: 'gRPC extensions for Google Cloud Platform'
+  home: {{ data.get('url') }}
+  license: {{ data.get('license') }}
+  license_family: APACHE
+  summary: {{ data.get('description') }}
 
   description: |
-    Package for gRPC-GCP Python.
+    gRPC-GCP Python
+    ------------
+
     This repo is created to support GCP specific extensions for gRPC.
     To use the extension features, please refer to grpcio-gcp.
 
     This repo also contains supporting infrastructures such as
     end2end tests and benchmarks for accessing cloud APIs with gRPC client libraries.
+
+    gRPC-GCP Python is available wherever gRPC is available.
+
+    Usage
+    -----
+
+    Create a config file (e.g. `spanner.grpc.config`) defining API configuration,
+    with ChannelPoolConfig and MethodConfig.
+
+    <code style=display:block;white-space:pre-wrap>
+       channel_pool: {
+          max_size: 10
+          max_concurrent_streams_low_watermark: 1
+        }
+        method: {
+          name: "/google.spanner.v1.Spanner/CreateSession"
+          affinity: {
+            command: BIND
+            affinity_key: "name"
+          }
+        }
+        method: {
+          name: "/google.spanner.v1.Spanner/GetSession"
+          affinity: {
+            command: BOUND
+            affinity_key: "name"
+          }
+        }
+        method: {
+          name: "/google.spanner.v1.Spanner/DeleteSession"
+          affinity: {
+            command: UNBIND
+            affinity_key: "name"
+          }
+        }
+    </code>
+
+    Load configuration file to ApiConfig object.
+
+    <code style=display:block;white-space:pre-wrap>
+     import google.protobuf.text_format
+
+     config = grpc_gcp.api_config_from_text_pb(
+         pkg_resources.resource_string(__name__, 'spanner.grpc.config'))
+    </code>
+
+    Create channel pool using grpc_gcp.
+
+    <code style=display:block;white-space:pre-wrap>
+     import grpc_gcp
+     import grpc
+
+     credentials = grpc.ssl_channel_credentials()
+     # Add api config key-value pair to options
+     `options = [(grpc_gcp.API_CONFIG_CHANNEL_ARG, config)]`
+     channel_pool = grpc_gcp.secure_channel(target, credentials, options)
+    </code>
+
+    The generated channel pool is inherited from the original grpc.Channel,
+    with underlying support for multiple grpc channels.
 
   doc_url: https://grpc.io/docs/
   dev_url: https://github.com/GoogleCloudPlatform/grpc-gcp-python
