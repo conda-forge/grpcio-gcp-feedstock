@@ -1,6 +1,6 @@
 {% set name = "grpcio-gcp" %}
 {% set version = "0.2.2" %}
-{% set data = load_setup_py_data() %}
+
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -28,10 +28,10 @@ test:
     - grpc
 
 about:
-  home: {{ data.get('url') }}
-  license: {{ data.get('license') }}
+  home: https://grpc.io
+  license: Apache License 2.0
   license_family: APACHE
-  summary: {{ data.get('description') }}
+  summary: 'gRPC extensions for Google Cloud Platform'
 
   description: |
     gRPC-GCP Python
