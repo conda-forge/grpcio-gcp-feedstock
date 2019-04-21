@@ -34,8 +34,7 @@ about:
   summary: 'gRPC extensions for Google Cloud Platform'
 
   description: |
-    gRPC-GCP Python
-    ------------
+    **gRPC-GCP Python**
 
     This repo is created to support GCP specific extensions for gRPC.
     To use the extension features, please refer to grpcio-gcp.
