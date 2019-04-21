@@ -1,7 +1,7 @@
 About grpcio-gcp
 ================
 
-Home: https://github.com/GoogleCloudPlatform/grpc-gcp-python
+Home: https://grpc.io
 
 Package license: Apache 2.0
 
@@ -9,12 +9,15 @@ Feedstock license: BSD 3-Clause
 
 Summary: gRPC extensions for Google Cloud Platform
 
-Package for gRPC-GCP Python.
+**gRPC-GCP Python**
+
 This repo is created to support GCP specific extensions for gRPC.
 To use the extension features, please refer to grpcio-gcp.
 
 This repo also contains supporting infrastructures such as
 end2end tests and benchmarks for accessing cloud APIs with gRPC client libraries.
+
+gRPC-GCP Python is available wherever gRPC is available.
 
 
 Current build status
@@ -22,9 +25,12 @@ Current build status
 
 
 <table><tr>
+    
     <td>All platforms:</td>
     <td>
-      <img src="https://img.shields.io/badge/noarch-disabled-lightgrey.svg" alt="noarch disabled">
+      <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6542&branchName=master">
+        <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpcio-gcp-feedstock?branchName=master">
+      </a>
     </td>
   </tr>
 </table>
