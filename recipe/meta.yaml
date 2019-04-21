@@ -11,18 +11,16 @@ source:
 
 build:
   noarch: python
-  number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --verbose"
+  number: 1
+  script: python -m pip install . --no-deps --ignore-installed --verbose
 
 requirements:
   host:
     - python
-    - pip
+    - pip >=18.1
+    - grpcio-tools >=1.16.1
   run:
-    - python
-    - grpcio >={{ version }}
-    - grpcio-tools
-    - protobuf >=3.6.1
+    - {{ pin_compatible('grpcio-tools') }}
 
 test:
   imports:
@@ -30,18 +28,21 @@ test:
     - grpc
 
 about:
-  home: https://github.com/GoogleCloudPlatform/grpc-gcp-python
+  home: https://grpc.io
   license: Apache 2.0
-  license_file: LICENSE
+  license_family: APACHE
   summary: 'gRPC extensions for Google Cloud Platform'
 
   description: |
-    Package for gRPC-GCP Python.
+    **gRPC-GCP Python**
+
     This repo is created to support GCP specific extensions for gRPC.
     To use the extension features, please refer to grpcio-gcp.
 
     This repo also contains supporting infrastructures such as
     end2end tests and benchmarks for accessing cloud APIs with gRPC client libraries.
+
+    gRPC-GCP Python is available wherever gRPC is available.
 
   doc_url: https://grpc.io/docs/
   dev_url: https://github.com/GoogleCloudPlatform/grpc-gcp-python
