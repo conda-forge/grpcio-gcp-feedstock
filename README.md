@@ -24,15 +24,15 @@ Current build status
 ====================
 
 
-<table><tr>
-    
-    <td>All platforms:</td>
+<table>
+<tr>
+    <td>All platforms</td>
     <td>
       <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=6542&branchName=master">
         <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/grpcio-gcp-feedstock?branchName=master">
       </a>
     </td>
-  </tr>
+</tr>
 </table>
 
 Current release info
