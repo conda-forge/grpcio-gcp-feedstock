@@ -1,5 +1,5 @@
 {% set name = "grpcio-gcp" %}
-{% set version = "0.2.2" %}
+  {% set version = "0.2.2" %}
 
 package:
   name: {{ name|lower }}
@@ -10,29 +10,34 @@ source:
   sha256: e292605effc7da39b7a8734c719afb12ec4b5362add3528d8afad3aa3aa9057c
 
 build:
-  noarch: python
-  number: 1
-  script: python -m pip install . --no-deps --ignore-installed --verbose
+  number: 2
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --verbose"
+  skip: True  # [win and vc<14]
 
 requirements:
   host:
     - python
     - pip >=18.1
-    - grpcio-tools >=1.16.1
+    - grpcio >=1.16.0
+    - protobuf >=3.6.1
   run:
-    - {{ pin_compatible('grpcio-tools') }}
+    - python
+    - {{ pin_compatible('grpcio') }}
+    - {{ pin_compatible('protobuf') }}
 
 test:
   imports:
-    - grpc_gcp
+    - google.protobuf
     - grpc
+    - grpc_gcp
+    - grpc_gcp.proto
+    - grpc_gcp.proto.grpc_gcp_pb2
 
 about:
   home: https://grpc.io
   license: Apache 2.0
   license_family: APACHE
   summary: 'gRPC extensions for Google Cloud Platform'
-
   description: |
     **gRPC-GCP Python**
 
@@ -43,6 +48,16 @@ about:
     end2end tests and benchmarks for accessing cloud APIs with gRPC client libraries.
 
     gRPC-GCP Python is available wherever gRPC is available.
+
+    **Supported Python Versions**
+
+    Python >= 3.5
+
+    **Deprecated Python Versions**
+
+    Python == 2.7
+    - Python 2.7 support will be removed on January 1, 2020.
+    - protobuf does not support Visual C++ 2008, windows py27 package not available
 
   doc_url: https://grpc.io/docs/
   dev_url: https://github.com/GoogleCloudPlatform/grpc-gcp-python
