@@ -22,7 +22,8 @@ requirements:
   run:
     - python >={{ python_min }}
     - grpcio >=1.12.0
-    - protobuf >=3.6.1
+    # The upper bound seems to be needed to prevent import issues
+    - protobuf >=3.6.1,<3.21
 
 test:
   imports:
